@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>나트랑 & 달랏 여행 플래너</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        :root {
+            --primary-color: #1e88e5;
+            --secondary-color: #26c6da;
+            --accent-color: #ff6b6b;
+            --background-color: #f5f5f5;
+        }
+
+        body {
+            background-color: var(--background-color);
+        }
+
+        .hero {
+            height: 100vh;
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)),
+            url('다운로드.jpeg');  ;
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            animation: fadeIn 2s;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .schedule {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin: 2rem 0;
+            overflow: hidden;
+        }
+
+        .day-header {
+            background: var(--primary-color);
+            color: white;
+            padding: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .timeline {
+            padding: 1.5rem;
+        }
+
+        .timeline-item {
+            display: flex;
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-left: 2rem;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 2px;
+            background: var(--secondary-color);
+        }
+
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            left: -5px;
+            top: 0;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--accent-color);
+        }
+
+        .time {
+            min-width: 120px;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .activity {
+            flex: 1;
+        }
+
+        .activity h3 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .activity p {
+            color: #666;
+            margin-bottom: 0.5rem;
+        }
+
+        .location-link {
+            display: inline-flex;
+            align-items: center;
+            color: var(--accent-color);
+            text-decoration: none;
+            margin-top: 0.5rem;
+        }
+
+        .location-link i {
+            margin-right: 0.5rem;
+        }
+
+        .cost {
+            color: #2ecc71;
+            font-weight: bold;
+        }
+
+        .transport {
+            color: #9b59b6;
+            font-style: italic;
+        }
+
+        .tips {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            margin-top: 3rem;
+        }
+
+        .tips h2 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .tips-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .tip-card {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .tip-card h3 {
+            color: var(--accent-color);
+            margin-bottom: 1rem;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .image-gallery {
+            display: flex;
+            overflow-x: auto;
+            gap: 1rem;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+
+        .gallery-image {
+            flex: 0 0 auto;
+            width: 300px;
+            height: 300px;
+            border-radius: 10px;
+            object-fit: cover;
+            transition: transform 0.3s;
+        }
+
+        .gallery-image:hover {
+            transform: scale(1.05);
+        }
+
+        .total-cost {
+            background: #e3f2fd;
+            padding: 2rem;
+            border-radius: 15px;
+            margin: 2rem 0;
+        }
+
+        .total-cost h2 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .cost-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="hero">
+        <div>
+            <h1>나트랑 & 달랏 여행 플래너</h1>
+            <p>쌈@뽕한 5일간의 베트남 여행</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Day 1 -->
+        <div class="schedule">
+            <div class="day-header">10월 31일 Day 1 - 나트랑 도착 & 시티투어</div>
+            <div class="image-gallery">
+                <img src="떠나자.jpg" alt="나트랑 비치" class="gallery-image">
+                <img src="돈.jpg" alt="Dam Market" class="gallery-image">
+                <img src="냠냠.jpeg" alt="Costa Seafood" class="gallery-image">
+            </div>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="time">11:35-12:00</div>
+                    <div class="activity">
+                        <h3>나트랑 공항 도착</h3>
+                        <p>- 입국 수속 및 수화물 수령<br>- 해외 로밍 돌리기 </p>
+                        <a href="https://maps.app.goo.gl/Uw2ipmQMdPVCCcz59" class="location-link" target="_blank">
+                            <i class="fas fa-map-marker-alt"></i>공항 위치 보기
+                        </a>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="time">12:00-13:00</div>
+                    <div class="activity">
+                        <h3>호텔 이동 & 체크인</h3>
+                        <p>- 호텔 체크인<br>- 짐 정리</p>
+                        <p class="cost">예상 비용: 없음 (DEPOSIT) ? </p>
+                        <p class="transport">이동수단: 택시</p>
+                        <a href="https://goo.gl/maps/vinpearl-resort-nha-trang" class="location-link" target="_blank">
+                            <i class="fas fa-map-marker-alt"></i>호텔 위치 보기
+                        </a>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="time">13:00-17:00</div>
+                    <div class="activity">
+                        <h3>점심 먹기 </h3>
+                        <p>-시내 돌아다니기<br>-시내 주위에서 밥먹기 <br>김빈, 김청 환전소 방문하기 </p>
+                        <p class="cost">예상 비용: 40,000동 (택시)</p>
+                        <p class="transport">이동수단: 그랩</p>
+                        <a href= "https://maps.app.goo.gl/8BEUVQXVjP9XnC4b7" class="location-link" target="_blank">
+                            <i class="fas fa-map-marker-alt"></i> 담시장 (시내)위치
+                        </a>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="time">17:00-19:00</div>
+                    <div class="activity">
+                        <h3>저녁 먹기 </h3>
+                        <p>-시내에서 맛집 찾아보기 <br>-편의점 털기 <br>- 쇼핑이랑 네일아트도 하기 </p>
+                        <p class="cost">예상 비용: 40,000동 (택시) 숙소로 돌아오기 </p>
+                        <p class="transport">이동수단: 그랩</p>
+                        <a href="https://goo.gl/maps/vinpearl-resort-nha-trang" class="location-link" target="_blank">
+                            <i class="fas fa-map-marker-alt"></i> 숙소 위치
+                        </a>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="time">20:00-21:00</div>
+                    <div class="activity">
+                        <h3>길거리 산책 </h3>
+                        <p> 주위 길거리 산책하면서 간식 탐방 </p>
+                        <p class="cost">예상 비용: 측정 불가능 (우리가 얼마나 먹을지) </p>
+                        <p class="transport">이동수단: 그랩</p>
+                        <a href="https://goo.gl/maps/vinpearl-resort-nha-trang" class="location-link" target="_blank">
+                            <i class="fas fa-map-marker-alt"></i> 숙소 위치
+                        </a>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="time">21:00-01:00</div>
+                    <div class="activity">
+                        <h3>아빠 기다리면서 잘 준비 하기 </h3>
+                        <p>내일 아침에 출발하기 때문에 풀은 짐이 있다면 다시 싸놓기</p>
+                        <p class="cost">예상 비용: 없음 </p>
+                        <p class="transport">이동수단: 없음</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Day 2: Dalat Travel Itinerary -->
+        <div class="schedule">
+            <div class="day-header">Day 2 - 달랏 탐방</div>
+            <div class="image-gallery">
+                <img src="일정.jpg" alt="Dalat Flower Garden" class="gallery-image">
+                <img src="사진" alt="Crazy House" class="gallery-image">
+                <img src="약속.jpeg" alt="Dalat Market" class="gallery-image">
+            </div>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="time">06:00-07:00</div>
+                    <div class="activity">
+                        <h3>일어나서 풍짜버스 터미널가기 </h3>
+                        <p>- 호텔 주위에서 맛집 탐방하고 골라서 먹기 </p>
+                        <p class="transport">이동수단: -</p>
+                        <a href="https://maps.app.goo.gl/iqL7qNxzDDLGm4MY7" class="location-link" target="_blank">
+                            <i class="fas fa-map-marker-alt"></i>터미널 위치
+                        </a>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="time">07:00-11:30</div>
+                    <div class="activity">
+                        <h3>달랏 이동</h3>
+                        <p>- 풍짜버스 이용하기 인당 9000원 예상 </p>
+                        <p class="cost">예상 비용: 680,000동</p>
+                        <p class="transport">이동수단: 풍짜버스</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="time">11:40-12:20</div>
+                    <div class="activity">
+                        <h3>다딴라 폭포</h3>
+                        <p>- 루지: 왕복 230,000동(폭포 3으로 이동시) 130,000동(폭포 1로 이동시)<br>집라인: 1,000,000동(1.5키로미터) <br>하이 로프 코스: 460,000동<br>cannoying: 1,886,000동  </p>
+                        <p class="cost">예상 비용: 50,000동</p>
+                        <p class="transport">이동수단: 그랩 죽림사에서 그랩으로 10분 예상</p>
+                        <a href="https://maps.app.goo.gl/c7Ess9VN3U1JP8vL6" class="location-link" target="_blank">
+                            <i class="fas fa-map-marker-alt"></i>다딴라 폭포 위치
+                        </a>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="time">12:30-13:10</div>
+                    <div class="activity">
+                        <h3>점심먹기</h3>
+                        <p>숙소 주위에서 먹기  <br>-베트남 전통 음식점 </p>
+                        <p class="cost">예상비용 : 400,000동</p>
+                        <p class="transport">이동수단: 그랩앱</p>
+                        <a href="" class="location-link" target="_blank">
+                            <i class="fas fa-map-marker-alt"></i>음식점 위치
+                        </a>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="time">13:10-13:30</div>
+                    <div class="activity">
+                        <h3>호텔 체크인</h3>
+                        <p>- 간단하게 짐풀기 </P>
+                        <p class="transport">이동수단: 그랩</p>
+                        <a href="https://goo.gl/maps/an-cafe-dalat" class="location-link" target="_blank">
+                            <i class="fas fa-map-marker-alt"></i>호텔 위치
+                        </a>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="time">13:30-15:00</div>
+                    <div class="activity">
+                        <h3>달랏 기차역 방문</h3>
+                        <p>기념품이랑 사진찍기</p>
+                        <p class="cost">예상 비용: 입장 5,000동, 편도:98,000동 (VIP1) 88,000동 (VIP2) 돌아올때는 그랩타기 </p>
+                        <p class="transport">이동수단: 그랩</p>
+                        <a href="https://maps.app.goo.gl/oEbFQbk4zzknw9FW7" class="location-link" target="_blank">
+                            <i class="fas fa-map-marker-alt"></i>기차역 위치 
+                        </a>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="time">15:00-16:20</div>
+                    <div class="activity">
+                        <h3>호수 구경 </h3>
+                        <p>피곤하면 숙소에서 자고 안 피곤하면 사진 찍으러 나간다</p>
+                        <p class="cost">예상 비용: 200,000동</p>
+                        <p class="transport">이동수단: 그랩</p>
+                        <a href="https://maps.app.goo.gl/VuAXfS2vH2iSrix4A" class="location-link" target="_blank">
+                            <i class="fas fa-map-marker-alt"></i>카페 위치 
+                        </a>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="time">16:20-17:30</div>
+                    <div class="activity">
+                        <h3>이 때쯤 한 번 가야 하는 인스타 감성 카페 </h3>
+                        <p>지금부터 찾아보기 뀽</p>
+                        <p class="cost">예상 비용: 200,000동</p>
+                        <p class="transport">이동수단: 그랩</p>
+                        <a href="https://maps.app.goo.gl/oEbFQbk4zzknw9FW7" class="location-link" target="_blank">
+                            <i class="fas fa-map-marker-alt"></i>카페 위치 
+                        </a>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="time">17:30-19:00</div>
+                    <div class="activity">
+                        <h3>하고 싶은 활동 골라서 하기</h3>
+                        <p>가현이가 고른건 여기까지라능...</p>
+                        <p class="cost">예상 비용: ?</p>
+                        <p class="transport">이동수단: 그랩</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="time">19:30-21:30</div>
+                    <div class="activity">
+                        <h3>저녁</h3>
+                        <p>-맛있는 저녁 먹기 (아직 결정 안남) <br>- 야경 감상</p>
+                        <p class="cost">예상 비용: 1,500,000동</p>
+                        <p class="transport">이동수단: Grab</p>
+                        <a href="https://goo.gl/maps/skylight-rooftop" class="location-link" target="_blank">
+                            <i class="fas fa-map-marker-alt"></i> 위치
+                        </a>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="time">19:30-21:30</div>
+                    <div class="activity">
+                        <h3>야시장</h3>
+                        <p>-달랏 야시장 방문 <br>-주전부리 냠냠</p>
+                        <p class="cost">예상 비용: 500,000동</p>
+                        <p class="transport">이동수단: Grab</p>
+                        <a href="https://maps.app.goo.gl/xFTgLC1LsadynucW7" class="location-link" target="_blank">
+                            <i class="fas fa-map-marker-alt"></i> 야시장 위치
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <div class="schedule">
+            <div class="day-header">Day 3 - 나트랑 시내 구경</div>
+            <div class="image-gallery">
+                <img src="떠나자.jpg" alt="Nha Trang Beach" class="gallery-image">
+                <img src="자꾸만 눈에 밟히던 남자.jpeg" alt="Island Tour" class="gallery-image">
+                <img src="화잍" alt="Water Activities" class="gallery-image">
+            </div>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="time">07:00-11:30</div>
+                    <div class="activity">
+                        <h3>달랏에서 나트랑으로 출발</h3>
+                        <p>올 때랑 똑같이 풍짜버스 사용</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="time">11:30-12:00</div>
+                    <div class="activity">
+                        <h3>숙소 도착 후 짐 맡기고 투어 돌기</h3>
+                        <p>- 전용 보트 이용<br>- Mun Island, Mot Island 방문</p>
+                        <p class="cost">예상 비용: 1,200,000동</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="time">12:10-14:00</div>
+                    <div class="activity">
+                        <h3>시내 열삼히 구경</h3>
+                        <p>-포나가르 탑<br>- 담시장 <br>-롱선사 <br>-대성당 </p>
+                        <p class="cost">예상 비용: 그랩 150,000동 (4번)</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="time">14:00-15:00</div>
+                    <div class="activity">
+                        <h3>점심먹기</h3>
+                        <p>맛집 리스트에서 하나 고르기 </p>
+                        <p class="cost">예상 비용: 500,000동</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="time">15:00-17:00</div>
+                    <div class="activity">
+                        <h3>마사지 받기</h3>
+                        <p>주위에 마사지샾 많음</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="time">17:00-18:00</div>
+                    <div class="activity">
+                        <h3>일찍 들어와서 쉬기</h3>
+                        <p></p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="time">18:00-19:00</div>
+                    <div class="activity">
+                        <h3>저녁</h3>
+                        <p>즉흥으로 고르자 </p>
+                        <p class="cost">예상 비용: 600,000동</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="time">19:30-21:00</div>
+                    <div class="activity">
+                        <h3>해변 산책</h3>
+                        <p>- 나트랑 해변에서 산책 겸 소화</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+       
+    <!-- Day 4: Nha Trang Relaxation & Culture -->
+    <div class="schedule">
+        <div class="day-header">Day 4 - 나트랑 바다 구경</div>
+        <div class="image-gallery">
+            <img src="잠수.jpeg" alt="Thap Ba Hot Springs" class="gallery-image">
+            <img src="짤.jpeg" alt="Long Son Pagoda" class="gallery-image">
+            <img src="Ma Dong-seok.jpeg" alt="Nha Trang Cathedral" class="gallery-image">
+        </div>
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="time">08:00-09:00</div>
+                <div class="activity">
+                    <h3>호텔 주위 시내에서 먹기</h3>
+                    <p>냠냠 </p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="time">09:00-15:50</div>
+                <div class="activity">
+                    <h3>바다 투어</h3>
+                    <p>-투어 패키지로 해상 스포츠 하기</p>
+                    <p class="cost">예상 비용: 인당 65달러</p>
+                    <a href="https://cafe.naver.com/zzop/2475557" class="location-link" target="_blank">
+                        <i class="fas fa-map-marker-alt"></i> 투어 예약좌표
+                    </a>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="time">16:30-18:00</div>
+                <div class="activity">
+                    <h3>나갈 준비</h3>
+                    <p>-씻고 준비해서 나갈준비를 한다</p>
+                    <p class="cost">예상 비용: 없음</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="time">18:00-22:00</div>
+                <div class="activity">
+                    <h3>야시장 구경 및 저녁</h3>
+                    <p>시내에 해산물 음식점에서 저녁먹기</p>
+                    <p class="cost">예상 비용: 2,000,000동 (우리 짱 많이 먹잖아)</p>
+                    <a href="https://maps.app.goo.gl/8BmgrycG2NW2eZuPA" class="location-link" target="_blank">
+                        <i class="fas fa-map-marker-alt"></i> 가게 위치 
+                    </a>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="time">22:00-23:00</div>
+                <div class="activity">
+                    <h3>숙소 돌아오기</h3>
+                    <p>- 이제는 우리가 자야할 시간 </p>
+                    <p class="cost">예상 비용: 40,000동 </p>
+                    <a href="https://goo.gl/maps/nha-trang-cathedral" class="location-link" target="_blank">
+                        <i class="fas fa-map-marker-alt"></i> 숙소 위치 
+                    </a>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="time">23:00-00:00</div>
+                <div class="activity">
+                    <h3>하고 싶은거</h3>
+                    <p>-피곤하니깐 나름 일찍자기</p>
+                    <p class="cost">예상 비용: 없음</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Day 5: Departure Day -->
+    <div class="schedule">
+        <div class="day-header">Day 5 -이제는 집에 가야 할 시간</div>
+        <div class="image-gallery">
+            <img src="고통.jpeg" alt="Nha Trang" class="gallery-image">
+            <img src="학교.jpeg" alt="Airport" class="gallery-image">
+        </div>
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="time">06:00-07:00</div>
+                <div class="activity">
+                    <h3> 가방싸고 나오기 </h3>
+                    <p>-압쥐의 일정은 내가 몰겠습네다</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="time">07:00-11:00</div>
+                <div class="activity">
+                    <h3>공항가서 체크인하고 준비하기</h3>
+                    <p>- 학교를 다시 가야한다는 슬픈 마음으로</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="time">11:00-12:00</div>
+                <div class="activity">
+                    <h3>비행기 탑승</h3>
+                    <p>- 빠빠이</p>
+                    <p class="cost">예상 비용: 내 과민성대장증후군</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 하단 기념품 추천 섹션 -->
+<div class="souvenir-section">
+    <h2>나트랑에서 꼭 사와야 할 기념품 🛍️</h2>
+    <ul class="souvenir-list">
+        <li><strong> 냠냠 망고 푸딩:</strong> 다들 저거 사감</li>
+        <li><strong>메이드 인 나트랑 소금:</strong> 천연 해산물로 유명한 나트랑의 소금은 맛있당.</li>
+        <li><strong>건어물:</strong> 해산물로 유명한 나트랑에서 말린 오징어, 새우 냠냠</li>
+        <li><strong>망고 젤리:</strong> 친구들이 사오라고 반협박</li>
+    </ul>
+</div>
+
+<style>
+    .souvenir-section {
+        background-color: #f9f9f9;
+        padding: 2rem;
+        margin-top: 2rem;
+        border-radius: 10px;
+    }
+
+    .souvenir-section h2 {
+        color: #1e88e5;
+        margin-bottom: 1rem;
+    }
+
+    .souvenir-list {
+        list-style: none;
+        padding-left: 0;
+    }
+
+    .souvenir-list li {
+        font-size: 1.2rem;
+        margin-bottom: 0.5rem;
+        color: #444;
+    }
+
+    .souvenir-list li strong {
+        color: #99a9ff;
+    }
+</style>
+
+<div class="restaurant-section">
+    <h2>나트랑 맛집 추천 🍽️</h2>
+    <ul class="restaurant-list">
+        <li><strong>촌촌킴:</strong> 한국어 메뉴 제공, 저렴한 가격의 베트남 가정식. 스프링롤과 돼지갈비찜이 인기.</li>
+        <li><strong>분짜하노이:</strong> 분짜 맛집, 저렴하지만 위생이 별로.</li>
+        <li><strong>포홍(하이카):</strong> 로컬 쌀국수집, 오렌지 주스가 맛있음.</li>
+        <li><strong>리스그릴:</strong> BBQ와 해산물 전문, 가격이 비쌈.</li>
+        <li><strong>세일링클럽:</strong> 한국어 메뉴, 분위기 좋은 해변가 레스토랑.</li>
+        <li><strong>마담프엉:</strong> 한국어 메뉴, 5성급 리조트 출신 쉐프의 요리.</li>
+        <li><strong>떠이66:</strong> 해산물 식당, 계란 볶음밥과 칠리 새우 추천.</li>
+        <li><strong>놈놈:</strong> 김치 피자와 다양한 메뉴, 한국어 메뉴 제공.</li>
+        <li><strong>짜오마오:</strong> 베트남 가정식, 갈릭 새우와 반쎄오 인기.</li>
+        <li><strong>포 70:</strong> 로컬 쌀국수집, 오전 10시까지만 영업.</li>
+        <li><strong>갈랑가:</strong> 가정식과 스트릿푸드, 반미와 반쎄오 유명.</li>
+        <li><strong>루남 비스트로:</strong> 양식집, 가격 대비 맛이 별로.</li>
+        <li><strong>볼락:</strong> 반비와 볼락 전문, 로컬 맛집.</li>
+        <li><strong>옌스:</strong> 반쎄오와 쌀국수 맛있음.</li>
+        <li><strong>껌땀:</strong> 로컬 덮밥 맛집, 최근 리뉴얼.</li>
+        <li><strong>타로찬:</strong> 게 요리 전문, 후기가 좋음.</li>
+        <li><strong>랜턴스:</strong> 한국어 메뉴 제공, BBQ와 쌀국수.</li>
+        <li><strong>짜까하노이:</strong> 생선튀김 전문.</li>
+        <li><strong>콴코리엔:</strong> 가성비 갑, 분짜 맛집.</li>
+        <li><strong>반쎄오85:</strong> 반쎄오와 스프링롤 전문.</li>
+        <li><strong>동호관:</strong> 해산물 전문, 오징어튀김과 새우구이 추천.</li>
+        <li><strong>락깐:</strong> 숯불구이집, 위생 별로.</li>
+        <li><strong>꽌 넴 당반꾸엔:</strong> 넴느엉 전문, 가성비 갑.</li>
+        <li><strong>포한푹 (행복 쌀국수):</strong> 뚝배기 쌀국수집, 한국인 입맛.</li>
+        <li><strong>인디스키친:</strong> 한국인 사장, 한식과 양식.</li>
+        <li><strong>알파카:</strong> 파스타와 피자.</li>
+        <li><strong>반깐51:</strong> 길거리 반깐집.</li>
+    </ul>
+</div>
+
+<div class="cafe-section">
+    <h2>나트랑 카페 추천 ☕</h2>
+    <ul class="cafe-list">
+        <li><strong>콩카페:</strong> 유명한 베트남 커피 전문 카페, 코코넛 스무디와 멍빈 스무디가 인기.</li>
+        <li><strong>레인포레스트:</strong> 분위기 좋은 카페, 코코넛 커피와 망고 스무디 추천.</li>
+        <li><strong>안카페:</strong> 풀숲 컨셉, 코코넛 아이스크림과 스무디.</li>
+        <li><strong>카페 테라스:</strong> 비치 근처, 쾌적한 인테리어와 한국 가격 비슷.</li>
+        <li><strong>CCCP 카페:</strong> 사회주의 컨셉, 쓰어다와 코코넛 스무디.</li>
+        <li><strong>하이랜드:</strong> 베트남의 스타벅스, 쓰어다.</li>
+        <li><strong>일라차:</strong> 밀크티 카페, 흑당 버블티와 자몽티 추천.</li>
+        <li><strong>브이푸룻:</strong> 생과일 스무디 전문, 아보카도 아이스크림 스무디가 유명.</li>
+        <li><strong>혼총커피:</strong> 오션뷰가 멋진 노천 카페.</li>
+        <li><strong>브리티:</strong> 영국식 인테리어, 다양한 홍차 제공.</li>
+        <li><strong>디 트레인 커피:</strong> 한국 카페 느낌, 기차역 옆 위치.</li>
+        <li><strong>정글커피:</strong> 예쁜 인테리어, 대성당 근처, 한국 사람이 적음.</li>
+    </ul>
+</div>
+
+<style>
+    .restaurant-section, .cafe-section {
+        background-color: #f9f9f9;
+        padding: 2rem;
+        margin-top: 2rem;
+        border-radius: 10px;
+    }
+
+    .restaurant-section h2, .cafe-section h2 {
+        color: #1e88e5;
+        margin-bottom: 1rem;
+    }
+
+    .restaurant-list, .cafe-list {
+        list-style: none;
+        padding-left: 0;
+    }
+
+    .restaurant-list li, .cafe-list li {
+        font-size: 1.2rem;
+        margin-bottom: 0.5rem;
+        color: #444;
+    }
+
+    .restaurant-list li strong, .cafe-list li strong {
+        color: #99a9ff;
+    }
+</style>
+            </div>
+        </div>
+    </div>
+    </div>
+</body>
+</html>
